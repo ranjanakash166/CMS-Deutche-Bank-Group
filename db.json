@@ -1,0 +1,36 @@
+{
+  "blogs": [
+    {
+      "title": "Travel Mountains",
+      "description": "Travel Mountains help us conquer mountains within and make us strong. Mountains VS beaches ",
+      "category": "Travel",
+      "date": "06/04/2022",
+      "status": "D",
+      "id": 2
+    },
+    {
+      "title": "Travel Beaches",
+      "description": "Travelling Beaches is altogether a different feeling . The calmness of the beaches give us the inner peace that is required . Some of the golden beaches are must visit ",
+      "category": "Travel",
+      "date": "06/04/2022",
+      "status": "D",
+      "id": 3
+    },
+    {
+      "title": "5G the upoming revolution",
+      "description": "5G is gonna be a new upcoming revolution that will lead to Digital revolution of the kind which has not been imagined ",
+      "category": "Tech",
+      "date": "06/05/2022",
+      "status": "D",
+      "id": 4
+    },
+    {
+      "title": "Fitness the saviour",
+      "description": "Regular exercise and physical activity promotes strong muscles and bones. It improves respiratory, cardiovascular health, and overall health. Staying active can also help you maintain a healthy weight, reduce your risk for type 2 diabetes, heart disease, and reduce your risk for some cancers.",
+      "category": "Fitness",
+      "date": "06/05/2022",
+      "status": "P",
+      "id": 5
+    }
+  ]
+}

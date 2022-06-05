@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.categoryDropdown {
+  width:100%;
+  border-radius: 4px;
+  height:35px;
+  border-color: #83ccc5;
+}
+
+.categoryStatus{
+  width:100%;
+  border-radius: 4px;
+  height:35px;
+  border-color: #83ccc5;
+}
+
+.categoryErrorMsg {
+  color:red;
+  text-align: left;
+  font-size: 14px;
+}
+.searchForm {
+  margin: auto;
+  padding: 15px;
+  max-width: 550px;
+  align-content: center;
+}
