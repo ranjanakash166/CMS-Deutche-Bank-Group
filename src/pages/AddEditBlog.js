@@ -4,7 +4,7 @@ import axios from "axios";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { ToastContainer, toast } from "react-toastify";
 import {useNavigate, useParams} from "react-router-dom";
-
+import { BeatLoader } from 'react-spinners';
 
 if (typeof window !== "undefined") {
   injectStyle();
@@ -21,6 +21,7 @@ const blogstatus = ["D","P"];
 const AddEditBlog = () => {
   const [formValue,setformvalue] = useState(initialstate);
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {title,content} = formValue;
   const navigate = useNavigate();
 
@@ -71,12 +72,14 @@ const AddEditBlog = () => {
         const headers = {
           'Authorization': apptoken
         }
+        setLoading(true);
         if(!editMode){      
           const response = await axios.post("https://online-blog-heroku.herokuapp.com/api/v1/blog",formValue,{
             headers: headers
           });
           if(response.status === 201){
             console.log(response);
+            setLoading(false);
             notify();
           }else{
             toast.error("something went wrong");
@@ -84,6 +87,7 @@ const AddEditBlog = () => {
         }else{
           const response = await axios.patch(`https://online-blog-heroku.herokuapp.com/api/v1/blog/approve?blogId=${id}`);
           if(response.status === 200){
+            setLoading(false);
             notify();
           }else{
             toast.error("something went wrong");
@@ -103,6 +107,8 @@ const AddEditBlog = () => {
 
 
   return (
+    <>
+    <BeatLoader loading={loading}></BeatLoader>
     <MDBValidation className='row g-3' style={{marginTop:"50px"}} noValidate onSubmit={handleSubmit}>
         <p className='fs-2 fw-bold'>{editMode ? "Update Blog":"Add Blog"}</p>
         <div
@@ -141,6 +147,7 @@ const AddEditBlog = () => {
             <MDBBtn type="danger" style={{marginRight: "10px"}} onClick={()=>navigate("/")}>Go Back</MDBBtn>
         </div>
     </MDBValidation>
+    </>
   )
 }
 

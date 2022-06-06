@@ -4,10 +4,12 @@ import { toast } from 'react-toastify';
 import {MDBRow, MDBCol, MDBContainer, MDBTypography} from 'mdb-react-ui-kit'; 
 import Blogs from '../components/Blogs';
 import Search from '../components/Search';
+import { BeatLoader } from 'react-spinners';
 
 const Home = () => {
   const [data,setData] = useState([]);
   const [searchValue,setSearchValue] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadBlogData();
@@ -20,6 +22,7 @@ const Home = () => {
       const headers = {
           'Authorization': apptoken
       };
+      setLoading(true);
     const response = await axios.get("https://online-blog-heroku.herokuapp.com/api/v1/blog/list/published",{
       headers: headers
     });
@@ -27,6 +30,7 @@ const Home = () => {
     if(response.status === 200){
       console.log("data",response.data);
       setData(response.data.content);
+      setLoading(false);
     }else{
       toast.error("something went wrong");
     }
@@ -73,8 +77,8 @@ const Home = () => {
 
   return (
     <>
+    <BeatLoader loading={loading}></BeatLoader>
     <Search searchValue={searchValue} onInputChange={onInputChange} handleSearch={handleSearch}>
-
     </Search>
     <MDBRow>
       {data.length === 0 && (

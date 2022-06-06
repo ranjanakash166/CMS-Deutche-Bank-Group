@@ -4,7 +4,7 @@ import axios from 'axios';
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-
+import { BeatLoader } from 'react-spinners';
 
 if (typeof window !== "undefined") {
     injectStyle();
@@ -19,6 +19,8 @@ const Login = () => {
     const [formValueSignIn,setformvalueSignIn] = useState(initialstateSignIn);
     const [token,setToken] = useState('');
     const {email,password} = formValueSignIn;
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     function notify() {
@@ -30,7 +32,8 @@ const Login = () => {
         if(email && password){
             const updatedformData = {...formValueSignIn,securityQuestion:'abc',securityAnswer:'ABC'};
             console.log(updatedformData);
-             const response = await axios.post("https://online-blog-heroku.herokuapp.com/api/v1/user/login",updatedformData);
+            setLoading(true);
+            const response = await axios.post("https://online-blog-heroku.herokuapp.com/api/v1/user/login",updatedformData);
            
              //console.log(response);
              console.log(response.data);
@@ -39,6 +42,7 @@ const Login = () => {
                  setToken(response.data.token);
                  localStorage.setItem('app-token', response.data.token);
                  localStorage.setItem('user-role', response.data.role);
+                 setLoading(false);
                  notify();
              }else{
                  toast.error("something went wrong");
@@ -55,6 +59,8 @@ const Login = () => {
     };
 
     return (
+        <>
+        <BeatLoader loading={loading}></BeatLoader>
         <MDBValidation className='row g-3' style={{marginTop:"50px"}} noValidate onSubmit={handleSubmit}>
             <p className='fs-2 fw-bold'>Sign in</p>
             <div
@@ -93,6 +99,7 @@ const Login = () => {
                 <ToastContainer></ToastContainer>
             </div>
         </MDBValidation>
+        </>
     )
 }
 

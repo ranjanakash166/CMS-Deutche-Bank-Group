@@ -4,7 +4,7 @@ import axios from 'axios';
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-
+import { BeatLoader } from 'react-spinners';
 
 if (typeof window !== "undefined") {
     injectStyle();
@@ -19,22 +19,26 @@ const initialstateSignup = {
 const Signup = () => {
     const [formValueSignUp,setformvalueSignUp] = useState(initialstateSignup);
     const {name,email,password} = formValueSignUp;
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     function notify() {
         toast.dark("Hey 👋, you are registered successfully!");
-    }
+    };
 
     const handleSubmit =  async (e) =>{
         e.preventDefault();
         if(name && email && password){
             const updatedformData = {...formValueSignUp,securityQuestion:'abc',securityAnswer:'ABC'};
+             setLoading(true);
              const response = await axios.post("https://online-blog-heroku.herokuapp.com/api/v1/user/signup",updatedformData);
              console.log(updatedformData);
              //console.log(response);
              console.log(response.data);
              if(response.status === 201){
                  notify();
+                 setLoading(false);
              }else{
                  toast.error("something went wrong");
              }
@@ -46,9 +50,11 @@ const Signup = () => {
     const onInputChange = (e) => {
         let {name,value} = e.target;
         setformvalueSignUp({...formValueSignUp,[name]:value});  
-      };
+    };
 
     return (
+        <>
+        <BeatLoader loading={loading}></BeatLoader>
         <MDBValidation className='row g-3' style={{marginTop:"50px"}} noValidate onSubmit={handleSubmit}>
             <p className='fs-2 fw-bold'>Sign Up</p>
             <div
@@ -98,7 +104,9 @@ const Signup = () => {
                 <MDBBtn type="danger" style={{marginRight: "10px"}} onClick={()=>navigate("/login")}>Signin</MDBBtn>
             </div>
             <ToastContainer></ToastContainer>
+         
         </MDBValidation>
+        </>
     )
 }
 
